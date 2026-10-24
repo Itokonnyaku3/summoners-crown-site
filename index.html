@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>サモナーズ・クラウン 1-1</title>
+    <style>#sc-gate{z-index:2147483647;color:#eee;background:#0d0f17;justify-content:center;align-items:center;font-family:sans-serif;display:flex;position:fixed;inset:0}#sc-gate form{flex-direction:column;gap:12px;width:calc(100% - 32px);max-width:320px;display:flex}#sc-gate h1{text-align:center;margin:0 0 8px;font-size:20px}#sc-gate input,#sc-gate button{box-sizing:border-box;border:1px solid #556;border-radius:6px;width:100%;padding:10px;font-size:16px}#sc-gate button{color:#111;cursor:pointer;background:#c9a227;border-color:#c9a227}#sc-gate [role=alert]{color:#ff8a8a;min-height:1.4em;font-size:14px}</style>
+    <script>
+      // Light gate only: this is NOT real security (the hash ships to the client).
+      (function () {
+        var EXPECTED = '27dcc229828cf092599eb3064c8d3c5d08c729023416d977b9e33b8350d6a451';
+        var KEY = 'sc-gate';
+        if (!EXPECTED || EXPECTED.charAt(0) === '%') return;
+        try { if (localStorage.getItem(KEY) === EXPECTED) return; } catch (e) {}
+        function sha256Hex(text) {
+          return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+            return Array.prototype.map.call(new Uint8Array(buf), function (b) {
+              return ('0' + b.toString(16)).slice(-2);
+            }).join('');
+          });
+        }
+        function show() {
+          var root = document.createElement('div');
+          root.id = 'sc-gate';
+          root.innerHTML = '<form><h1>サモナーズ・クラウン</h1>' +
+            '<label for="sc-gate-pw">パスワード</label>' +
+            '<input id="sc-gate-pw" type="password" autocomplete="current-password" />' +
+            '<button type="submit">入る</button><div role="alert"></div></form>';
+          document.body.appendChild(root);
+          document.documentElement.style.overflow = 'hidden';
+          var form = root.querySelector('form');
+          var input = root.querySelector('input');
+          var err = root.querySelector('[role=alert]');
+          form.addEventListener('submit', function (ev) {
+            ev.preventDefault();
+            sha256Hex(input.value).then(function (hex) {
+              if (hex === EXPECTED) {
+                try { localStorage.setItem(KEY, EXPECTED); } catch (e) {}
+                root.remove();
+                document.documentElement.style.overflow = '';
+              } else {
+                err.textContent = 'パスワードが違います';
+                input.value = '';
+                input.focus();
+              }
+            });
+          });
+          input.focus();
+        }
+        if (document.body) show();
+        else document.addEventListener('DOMContentLoaded', show);
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-CsO-qTLa.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DygsnUaI.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
