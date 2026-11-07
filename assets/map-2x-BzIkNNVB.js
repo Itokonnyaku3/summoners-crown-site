@@ -1,0 +1,1 @@
+var e=new URL(`map-2x-DL0rcH2J.png`,import.meta.url).href;export{e as default};
