@@ -1,0 +1,1 @@
+var e=new URL(`map-2x-BEI5NTxi.webp`,import.meta.url).href;export{e as default};
