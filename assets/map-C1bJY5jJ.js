@@ -1,0 +1,1 @@
+var e=new URL(`map-BcO-TcU6.webp`,import.meta.url).href;export{e as default};
